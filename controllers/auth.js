@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { uuid } from 'uuidv4';
 import Account from '../models/Account.js';
 import Session from '../models/SessionSchema.js';

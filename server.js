@@ -7,7 +7,7 @@ import Account from './models/Account.js';
 import Character from './models/Character.js';
 import Scores from './models/Scores.js';
 import Session from './models/SessionSchema.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import authRoutes from './routes/auth.js'
 import accountRoutes from './routes/account.js'
 import characterRoutes from './routes/characters.js'

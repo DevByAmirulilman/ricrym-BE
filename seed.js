@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { faker } from '@faker-js/faker';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import Account from './models/Account.js'; // Import the Account model
 import connectToDatabase from './config/db.js'; // Import the database connection
 import Character from './models/Character.js';
