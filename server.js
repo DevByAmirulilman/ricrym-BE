@@ -13,6 +13,7 @@ import accountRoutes from './routes/account.js'
 import characterRoutes from './routes/characters.js'
 import scoresRoutes from './routes/scores.js'
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 
 dotenv.config();
@@ -21,6 +22,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(morgan('dev'));
 
 // Connect to MongoDB

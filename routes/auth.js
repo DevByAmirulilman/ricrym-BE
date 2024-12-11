@@ -1,5 +1,6 @@
 import express from 'express'
 import { generateTwoFactorQR, login, register, verifyTwoFactor } from '../controllers/auth.js';
+import { authenticateSession } from '../middleware/auth.js';
 
 const router = express.Router()
 

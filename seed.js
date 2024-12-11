@@ -31,20 +31,25 @@ const seedAccounts = async () => {
 
     // Generate fake accounts
     const fakeAccounts = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 1000; i++) {
       // Generate random scores for each character
       const randomCharacters = await Promise.all(
         characters.map(async (char) => {
+          const rewardScore = faker.number.int({ min: 0, max: 100 }); // Generate a random score
           const score = await Scores.create({
             char_id: char._id,
-            reward_score: faker.number.int({ min: 0, max: 100 }), // Generate a random score
+            reward_score: rewardScore,
           });
           return {
             character: char._id,
             score: score._id,
+            reward_score: rewardScore, // Keep the score for total calculation
           };
         })
       );
+
+      // Calculate total score for the account
+      const totalScore = randomCharacters.reduce((sum, char) => sum + char.reward_score, 0);
 
       // Hash a random password
       const plainPassword = faker.internet.password(); // Generate a random password
@@ -58,10 +63,11 @@ const seedAccounts = async () => {
         avatar: {
           url: faker.image.avatar(), // URL for avatar
         },
-        characters: randomCharacters, // Add characters with their scores
+        characters: randomCharacters.map(({ character, score }) => ({ character, score })), // Add characters with their scores
+        totalScore, // Add the calculated total score
       });
-      console.log(plainPassword)
 
+      console.log(`Account ${i + 1}: Password: ${plainPassword}, Total Score: ${totalScore}`);
     }
 
     // Insert accounts into the database

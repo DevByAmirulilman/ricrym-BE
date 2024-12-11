@@ -152,7 +152,7 @@ export const generateTwoFactorQR = async (req, res) => {
     }
 
     // Regenerate the otpauth URL from the saved secret
-    const otpauthUrl = `otpauth://totp/WiraApp:${account.email}?secret=${account.twoFactorSecret}&issuer=MyApp`;
+    const otpauthUrl = `otpauth://totp/MyApp:${account.email}?secret=${account.twoFactorSecret}&issuer=MyApp`;
 
     // Generate the QR code as a Base64-encoded string
     const qrCode = await qrcode.toDataURL(otpauthUrl);
@@ -219,4 +219,5 @@ export const verifyTwoFactor = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 

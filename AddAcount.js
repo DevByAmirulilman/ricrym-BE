@@ -29,16 +29,21 @@ const AddAccount = async () => {
     // Generate random scores for each character
     const randomCharacters = await Promise.all(
       characters.map(async (char) => {
+        const rewardScore = faker.number.int({ min: 0, max: 100 }); // Generate a random score
         const score = await Scores.create({
           char_id: char._id,
-          reward_score: faker.number.int({ min: 0, max: 100 }), // Generate a random score
+          reward_score: rewardScore,
         });
         return {
           character: char._id,
           score: score._id,
+          reward_score: rewardScore, // Include reward_score for totalScore calculation
         };
       })
     );
+
+    // Calculate total score
+    const totalScore = randomCharacters.reduce((sum, char) => sum + char.reward_score, 0);
 
     // Hash a fixed password
     const plainPassword = 'aabbccdd'; // Define a fixed password for testing
@@ -46,19 +51,21 @@ const AddAccount = async () => {
 
     // Generate a new 2FA secret
     const secret = speakeasy.generateSecret({
-      name: `WiraApp (kamarul@gmail.com)`, // App name and user email
+      name: `MyApp (ismail@gmail.com)`, // App name and user email
     });
 
     // Create a single account
     const account = await Account.create({
-      username: 'kamarul', // Define a fixed username
-      email: 'kamarul@gmail.com', // Define a fixed email
+      username: 'ismail', // Define a fixed username
+      email: 'ismail@gmail.com', // Define a fixed email
       password: hashedPassword, // Store the hashed password
       avatar: {
         url: faker.image.avatar(), // URL for avatar
       },
-      characters: randomCharacters, // Add characters with their scores
+      characters: randomCharacters.map(({ character, score }) => ({ character, score })), // Add characters with their scores
       twoFactorSecret: secret.base32, // Save the generated 2FA secret
+      role: 1,
+      totalScore, // Include the total score
     });
 
     console.log('Account added successfully:', account);

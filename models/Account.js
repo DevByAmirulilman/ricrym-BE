@@ -3,6 +3,10 @@ const { Schema, model } = mongoose;
 
 const AccountSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
+  role : {
+    type:Number,
+    default:0
+  },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   avatar: {
@@ -18,6 +22,10 @@ const AccountSchema = new mongoose.Schema({
     score: { type: mongoose.Schema.Types.ObjectId, ref: 'Score' , required : false},
   }
   ],
+  totalScore : {
+    type: Number,
+    required : true
+  }
 });
 
 const Account = mongoose.model('Account', AccountSchema);

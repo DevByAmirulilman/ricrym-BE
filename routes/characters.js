@@ -1,5 +1,6 @@
 import express from 'express'
 import { getAllCharacters, getCharacterById } from '../controllers/characters.js'
+import { authenticateSession } from '../middleware/auth.js';
 
 
 const router = express.Router()
