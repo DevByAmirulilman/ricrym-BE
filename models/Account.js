@@ -24,7 +24,7 @@ const AccountSchema = new mongoose.Schema({
   ],
   totalScore : {
     type: Number,
-    required : true
+    required : false
   }
 });
 
